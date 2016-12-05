@@ -21,6 +21,9 @@ Other Relevant Information:
 Members:
 --------
 Kylie Hausch (khausch)
+
 Shelby Lem (slem)
+
 John Johnson (jjohns48)
+
 Nikolas Dean Brooks (nbrooks3)
