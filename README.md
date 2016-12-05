@@ -1,1 +1,7 @@
-This README contains very important and extremely pertinent information about this super special project.
+Project Dependencies:
+
+Set-up & Installation:
+
+Code Execution:
+
+Other Relevant Information:
