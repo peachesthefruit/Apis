@@ -28,6 +28,4 @@ John Johnson (jjohns48)
 
 Nikolas Dean Brooks (nbrooks3)
 
-
-
 **Note**: For member contributions, please see `CONTRIBUTORS.md`.
