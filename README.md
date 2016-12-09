@@ -37,19 +37,22 @@ Code Execution:
 - **To benchmark everything, do**:
 
 > chmod 775 benchmark.sh
+
 > ./benchmark.sh
 
 Other Relevant Information:
 ---------------------------
 
+- For member contributions, please see `CONTRIBUTORS.md`.
+
+- No bees were harmed in the making of this project
+
 Members:
 --------
-Kylie Hausch (khausch)
+- Kylie Hausch (khausch)
 
-Shelby Lem (slem)
+- Shelby Lem (slem)
 
-John Johnson (jjohns48)
+- John Johnson (jjohns48)
 
-Nikolas Dean Brooks (nbrooks3)
-
-**Note**: For member contributions, please see `CONTRIBUTORS.md`.
+- Nikolas Dean Brooks (nbrooks3)
