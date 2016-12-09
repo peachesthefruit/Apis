@@ -1,10 +1,11 @@
 /*
-Read all input from webcrawl into nodes
-Give a certain address, breadth first search for a pointer to a node with the same
-address
+Read all input from webcrawl into map
+BFS a certain number of levels from a given website to find recently visited
+suggested sites created using most recently visited sites
+
+random walk randomly traverses graph, and counts how many times a certain site is visited
 
 ./a.out < KyInput.txt | sort -r | head -n 5 | cut -b 3-
-???
 */
 
 #include <iostream>
@@ -15,6 +16,7 @@ address
 #include <random>
 #include <string>
 #include <unistd.h>
+#include <algorithm>
 
 //Global Variables
 
@@ -22,8 +24,8 @@ address
 typedef std::map<std::string, std::vector<std::string>>::iterator it;
 int n = 5;
 int s = 100;
-std::string baddr = "cnn.com";
-std::string raddr = "cnn.com";
+std::string baddr;
+std::string raddr;
 bool b = false;
 bool r = false;
 
@@ -32,7 +34,7 @@ class Graph{
 		Graph();
 		void BFS();
 		void randomWalk();
-		void printSuggest(std::map<std::string, int>);
+		void printSuggest(std::map<std::string, int>, char);
 		int get_random(int);
 
 	private:
@@ -74,7 +76,7 @@ void Graph::BFS(){
 			n--;
 		}
 		if(n < 0){
-			printSuggest(suggest);
+			printSuggest(suggest, 'b');
 			break;
 		}
 		for(size_t i = 0; i < curr->second.size(); i++){
@@ -102,7 +104,6 @@ void Graph::randomWalk(){
 			temp = addr->second[get_random(num)];
 		}
 		it next = graph.find(temp);
-		std::cout <<temp<<std::endl;
 		if(next != addr){
 			auto search = rand.find(temp);
 			if(search != rand.end()){
@@ -115,13 +116,31 @@ void Graph::randomWalk(){
 		previous = addr->first;
 		addr = next;
 	}
-	std::cout<<"------------"<<std::endl;
-	printSuggest(rand);
+	printSuggest(rand, 'r');
 }
 
-void Graph::printSuggest(std::map<std::string,int> s){
+void Graph::printSuggest(std::map<std::string,int> s, char c){
+	std::cout<<"Suggested Sites:"<<std::endl;
+	std::vector<std::pair<std::string,int>> mapVec;
 	for(auto i = s.begin(); i != s.end(); i++){
-		std::cout<<i->second<<" "<<i->first<<std::endl;
+		if(c == 'b'){
+			if(i->first == baddr){
+				continue;
+			}
+		}
+		else if(c == 'r'){
+			if(i->first == raddr){
+				continue;
+			}
+		}
+		mapVec.push_back(std::make_pair(i->first,i->second));
+	}
+	std::sort(mapVec.begin(),mapVec.end(),[](const std::pair<std::string,int> &a, const std::pair<std::string,int> &b){ return a.second < b.second; });
+	for(int i = 0; i < 5; i++){
+		if(i >= mapVec.size()){
+			break;
+		}
+		std::cout<<"\t"<<mapVec[i].first<<std::endl;
 	}
 }
 
@@ -139,6 +158,7 @@ void usage(int status){
 	std::cout<<"	-r RADDR	Run random walk for the address RADDR"<<std::endl;
 	std::cout<<"	-n N		number of levels to traverse for BST"<<std::endl;
 	std::cout<<"	-s S		number of steps to take when random walking"<<std::endl;
+	exit(status);
 }
 
 void parse(int argc, char *argv[]){
@@ -168,6 +188,7 @@ void parse(int argc, char *argv[]){
 		}
 	}
 }
+
 
 int main(int argc, char *argv[]){
 	parse(argc, argv);
