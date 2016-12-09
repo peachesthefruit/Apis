@@ -1,35 +1,36 @@
 RANDOM WALKING:
 Suggested Sites:
-cnb.cx
-cnbc.com
-reuters.com
-cnn.passagen.se
-edition.cnn.com
-0.062500	3.429688
+cbinsights.com
+editor.cbinsights.com
+linkedin.com
+money.cnn.com
+0.062500	3.421875
 Suggested Sites:
+indeed.com
+indeed.jobs
+indeed.zendesk.com
+money.cnn.com
+airbnb.com
+0.078125	3.429688
+Suggested Sites:
+de-de.facebook.com
+l.facebook.com
+de-de.messenger.com
+money.cnn.com
+community.cnn.com
+0.078125	3.425781
+Suggested Sites:
+hi-in.facebook.com
+l.facebook.com
+hi-in.messenger.com
 ashingtonpost.com
 gocomics.com
-pcomics.washingtonpost.com
-subscribe.washingtonpost.com
-uclick.com
-0.062500	3.429688
-Suggested Sites:
-i2.cdn.turner.com
-unaids.org
-us.macmillan.com
-vine.co
-0.078125	3.425781
+0.171875	3.429688
 Suggested Sites:
 cnn.it
 smartlink.cnn.com
-0.140625	3.425781
-Suggested Sites:
-zh-cn.facebook.com
-zh-cn.messenger.com
-l.facebook.com
-amicc.org
-audience.cnn.com
-0.921875	3.429688
+politicalticker.blogs.cnn.com
+0.781250	3.425781
 BREADTH-FIRST SEARCH:
 Suggested Sites:
 money.cnn.com
@@ -44,11 +45,11 @@ zacks.com
 thestreet.com
 fool.com
 ft.com
-0.484375	9.359375
+0.484375	9.363281
 Suggested Sites:
 my.fool.com
 facebook.com
 l.facebook.com
 online.wsj.com
 money.cnn.com
-40.265625	629.746094
+38.062500	629.750000
