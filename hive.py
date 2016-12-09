@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, render_template, request
+import subprocess
 app = Flask(__name__)
 
 @app.route('/')
@@ -7,9 +8,7 @@ def index():
 
 @app.route('/honey', methods=['POST'])
 def honey():
-    data = []
-    f = open('out.txt', 'r')
-    for line in f:
-        line = line.rstrip()
-        data.append('www.' + line)
-    return jsonify(data=data)
+    inFile = open('nectar.txt')
+    p = subprocess.Popen(['./honeybee', '-r', 'cnn.com', '-n', '10'], stdin=inFile, stdout=subprocess.PIPE)
+    out, err = p.communicate()
+    return jsonify(data=str(out, 'utf-8').split('\n')[1:])
