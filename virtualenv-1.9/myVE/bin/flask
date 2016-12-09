@@ -1,9 +1,0 @@
-#!/afs/nd.edu/user16/nbrooks3/dsfinal/DSFinalProject/virtualenv-1.9/myVE/bin/python
-# EASY-INSTALL-ENTRY-SCRIPT: 'Flask==0.11.1','console_scripts','flask'
-__requires__ = 'Flask==0.11.1'
-import sys
-from pkg_resources import load_entry_point
-
-sys.exit(
-   load_entry_point('Flask==0.11.1', 'console_scripts', 'flask')()
-)
