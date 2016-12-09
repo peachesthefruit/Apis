@@ -1,11 +1,14 @@
 CXX=	g++
 CXXFLAGS=	-g -Wall -std=gnu++11
 SHELL=	bash
-PROGRAMS= apis measure
+PROGRAMS= apis measure honeybee
 
-all: apis measure
+all: apis measure honeybee
 
 apis:	apis.cpp
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+honeybee: honeybee.cpp
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
 clean:
