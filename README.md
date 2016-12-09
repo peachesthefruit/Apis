@@ -14,19 +14,30 @@ Set-up & Installation:
 
 Code Execution:
 ---------------
-- **To make:**:
->> make
-- **To test:**:
->> make test
-- **To run scout.py and create nectar.txt:**:
->> ./scout.py -o nectar.txt
+- **To make**:
+
+> make
+
+- **To test**:
+
+> make test
+
+- **To run scout.py and create nectar.txt**:
+
+> ./scout.py -o nectar.txt
+
 - **To run honeybee's usage (and learn how to run BFS and random step versions)**:
->> ./honeybee -h
+
+> ./honeybee -h
+
 - **To run the server, hyve.py**:
->>
-- **To benchmark everything, do*:
->> chmod 775 benchmark.sh
->> ./benchmark.sh
+
+>
+
+- **To benchmark everything, do**:
+
+> chmod 775 benchmark.sh
+> ./benchmark.sh
 
 Other Relevant Information:
 ---------------------------

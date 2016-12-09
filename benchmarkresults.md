@@ -1,5 +1,5 @@
-SCOUT
-=====
+SCOUT RESULTS
+============
 
 ./scout.py
 ----------
@@ -17,8 +17,8 @@ SCOUT
 | 10000 |   100   | 20 min 30 s | 189 MB |
 | 10000 |   250   | 15 min 12 s | 163 MB |
 
-HONEYBEE
-========
+HONEYBEE RESULTS
+================
 
 ./honeybee -b
 -------------
