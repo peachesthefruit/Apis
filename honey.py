@@ -9,7 +9,17 @@ from urllib.request import build_opener
 
 class HoneyBee:
     logFile = open('honey_bee.log', 'w')
-    ignored = set(['ad.doubleclick.net', 't.co', 'bit.ly', 'twitter.com'])
+    ignored = set([
+        'ad.doubleclick.net',
+        't.co',
+        'bit.ly',
+        'cs.pn',
+        'twitter.com',
+        'zh-cn.messenger.com',
+        'zh-cn.facebook.com',
+        'ar-ar.facebook.com',
+        'osf.io'
+    ])
 
     def __init__(self, root, max_workers=10, max_links=100):
         '''Constructor takes in number of links and workers and prepares crawler'''
@@ -119,7 +129,7 @@ class HoneyBee:
         '''Determines if links is valid or in the ignored set'''
         if urlparse(link).scheme is '' or urlparse(link).netloc is '':
             return False
-        elif urlparse(link).netloc.strip('w.') in self.ignored:
+        elif urlparse(link).netloc.replace('www.','') in self.ignored:
             return False
         else:
             return True
@@ -143,7 +153,7 @@ class HoneyBee:
         for src, links in self.graph.items():
             for link in links:
                 outFile.write('{}\t{}\n'.format(src, link))
-    
+
 
 import getopt
 
