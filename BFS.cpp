@@ -21,9 +21,10 @@ class Graph{
 	public:
 		Graph();
 		void BFS(std::string, int); // rethink this
-//		it randomWalk(it, size_t);
+		void randomWalk(std::string, int);
 		void printSuggest(std::map<std::string,int>);
 		int get_random(int);
+//		int degrees = 3;
 
 	private:
 		std::map<std::string,std::vector<std::string>> graph;
@@ -42,9 +43,6 @@ Graph::Graph(){
 void Graph::BFS(std::string address, int levels){
 	std::queue<it> q;
 	it addr = graph.find(address);
-	if(addr == graph.end()){
-//		std::cout << "address not found" <<std::endl;
-	}
 	q.push(addr);
 	int prev = 1;
 	int next = 0;
@@ -54,7 +52,6 @@ void Graph::BFS(std::string address, int levels){
 		q.pop();
 		next = next+curr->second.size();
 
-//		std::cout<<curr->first<<" "<<levels<<" "<<prev<<" "<<next<<std::endl;
 		if(suggest.find(curr->first) != suggest.end()){
 			suggest[curr->first]++;
 		}
@@ -74,31 +71,36 @@ void Graph::BFS(std::string address, int levels){
 		for(size_t i = 0; i < curr->second.size(); i++){
 			std::string tmp = curr->second[i];
 			it tmpIT = graph.find(tmp);
-			if(tmpIT == graph.end()){
-//				std::cout <<"address not found"<<std::endl;
-			}
 			q.push(tmpIT);
 		}
 	}
-
 }
-/*
-it Graph::randomWalk(it n, size_t degrees){
-	map<string,int> m;
-	for(size_t i = 0; i < degrees; i++){
-		Node tmp = n.neighbors[i]
-		if(n.address != tmp.address){
-			auto it = m.find(tmp.address);
-			if(it != m.end()){
-				it.second++;
+
+void Graph::randomWalk(std::string address, int degrees){
+	std::map<std::string, int> rand;
+	it addr = graph.find(address);
+	if (addr == graph.end()){
+		return;
+	}
+	for(int i = 0; i < degrees; i++){
+		size_t n = addr->second.size();
+		std::string temp = addr->second[get_random(n)];
+		it next = graph.find(temp);
+		std::cout <<temp<<std::endl;
+		if(next != addr){
+			auto search = rand.find(temp);
+			if(search != rand.end()){
+				rand[temp]++;
 			}
 			else{
-				m[tmp.address] = 1;
+				rand[temp] = 1;
 			}
 		}
+		addr = next;
 	}
+	std::cout<<"------------"<<std::endl;
+	printSuggest(rand);
 }
-*/
 
 void Graph::printSuggest(std::map<std::string,int> s){
 	for(auto i = s.begin(); i != s.end(); i++){
@@ -115,6 +117,7 @@ int Graph::get_random(int n){
 
 int main(){
 	Graph myGraph;
-	myGraph.BFS("swagmaster",4);
+	//myGraph.BFS("swagmaster",4);
+	myGraph.randomWalk("cnn", 10);
 	return 0;
 }
