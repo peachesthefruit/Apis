@@ -60,7 +60,7 @@ class HoneyBee:
         headers = { 'User-Agent' : 'Mozilla/5.0' }
         hit = False
         try:
-            with aiohttp.Timeout(10):
+            with aiohttp.Timeout(7):
                 response = yield from self.session.get(url, headers=headers, allow_redirects=False)
                 body = yield from response.text()
                 links = set()

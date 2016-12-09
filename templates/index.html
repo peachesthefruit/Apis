@@ -7,30 +7,24 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
 </head>
 <body>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3">
-        <h2 class="text-center">Apis </h2>
-        <div id="form" class="col-md-4">
-        </div>
-      </div>
-    </div>
-  </div>
   <div id="root"></div>
   <script src="//unpkg.com/react@15/dist/react.js"></script>
   <script src="//unpkg.com/react-dom@15/dist/react-dom.js"></script>
   <script src="https://code.jquery.com/jquery-3.1.1.js"
-    integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
-    crossorigin="anonymous"></script>
+  integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+  crossorigin="anonymous"></script>
   <script>window.jQuery || document.write('<script src="{{url_for('static', filename='jquery.js') }}">\x3C/script>')</script>
   <script type=text/javascript>
-    $ROOT = {{ request.script_root|tojson|safe }};
+  $ROOT = {{ request.script_root|tojson|safe }};
   </script>
   <script type="text/babel">
   class NameForm extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {value: ''};
+      this.state = {
+        value: '',
+        list: []
+      };
 
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -41,31 +35,46 @@
     }
 
     handleSubmit(event) {
-      $.post( $ROOT + "/honey", (data) => {
-        console.log('hello world', data)
+      $.post( $ROOT + "/honey", (res) => {
+        console.log('hello world', res)
+        this.setState({list: res.data})
       });
       event.preventDefault();
     }
 
     render() {
       return (
-        <form onSubmit={this.handleSubmit}>
-        <div className="input-group">
-        <input type="text" name="search" className="form-control input-lg" placeholder="URL"
-          value={this.state.value} onChange={this.handleChange}/>
-        <span className="input-group-btn">
-          <button className="btn btn-info btn-lg" type="button"><i className="glyphicon glyphicon-search"></i>
-          </button>
-        </span>
+        <div className="container">
+          <div className="row">
+            <div className="col-md-6 col-md-offset-3">
+              <h2 className="text-center">Apis </h2>
+              <div id="form" className="col-md-4">
+                <form onSubmit={this.handleSubmit}>
+                  <div className="input-group">
+                    <input type="text" name="search" className="form-control input-lg" placeholder="URL"
+                      value={this.state.value} onChange={this.handleChange}/>
+                    <span className="input-group-btn">
+                    <button className="btn btn-info btn-lg" type="button"><i className="glyphicon glyphicon-search"></i>
+                    </button>
+                    </span>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <ul>
+            {this.state.list.map(function(listValue){
+              return <li key={listValue}>{listValue}</li>;
+            })}
+          </ul>
         </div>
-        </form>
       );
     }
   }
 
   ReactDOM.render(
     <NameForm />,
-    document.getElementById('form')
+    document.getElementById('root')
   );
   </script>
 </body>
