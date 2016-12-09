@@ -9,7 +9,7 @@ from urllib.request import build_opener
 
 class HoneyBee:
     logFile = open('honey_bee.log', 'w')
-    ignored = set(['ad.doubleclick.net', 't.co', 'bit.ly'])
+    ignored = set(['ad.doubleclick.net', 't.co', 'bit.ly', 'twitter.com'])
 
     def __init__(self, root, max_workers=10, max_links=100):
         '''Constructor takes in number of links and workers and prepares crawler'''
@@ -187,11 +187,20 @@ def main():
             assert False, "unhandled option"
 
     loop = asyncio.get_event_loop()
-    root = ['http://www.cnn.com', 'http://www.washingtonpost.com', 'http://www.cbs.com', 'http://reddit.com', 'http://buzzfeed.com']
+    root = ['http://www.cnn.com',
+            'http://www.washingtonpost.com',
+            'http://www.cbs.com',
+            'http://reddit.com',
+            'http://buzzfeed.com',
+            'http://lolcats.com',
+            'http://espn.com',
+            'http://att.yahoo.net',
+            'http://yahoo.com',
+           ]
     hb = HoneyBee(root, max_workers=max_workers, max_links=max_links)
     signal.signal(signal.SIGINT, signal.default_int_handler)
     try:
-        loop.run_until_complete(hb.crawl())
+        loop.run_until_complete(hb.pollinate())
         hb.dump(outFile)
         print('\n')
     except KeyboardInterrupt:
