@@ -16,13 +16,13 @@ clean:
 
 test:	test-output test-memory test-time
 
-test-output:	apis
+test-output:	$(PROGRAMS)
 	@echo Testing output 1...
 	@diff --suppress-common-lines -y <(./honeybee -b b -n 2 < testInput.txt< testInput.txt) testOutput1.txt
 	@echo Testing output 2...
 	@diff --suppress-common-lines -y <(./honeybee -b d -n 3 < testInput.txt< testInput.txt) testOutput2.txt
 
-test-memory:	apis
+test-memory:	$(PROGRAMS)
 	@echo Testing memory...
 	@[ `valgrind --leak-check=full ./honeybee -b b -r b < testInput.txt 2>&1 | grep ERROR | awk '{print $$4}'` = 0 ]
 
