@@ -136,7 +136,7 @@ void Graph::printSuggest(std::map<std::string,int> s, char c){
 		mapVec.push_back(std::make_pair(i->first,i->second));
 	}
 	std::sort(mapVec.begin(),mapVec.end(),[](const std::pair<std::string,int> &a, const std::pair<std::string,int> &b){ return a.second < b.second; });
-	for(int i = 0; i < 5; i++){
+	for(size_t i = 0; i < 5; i++){
 		if(i >= mapVec.size()){
 			break;
 		}
