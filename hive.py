@@ -7,4 +7,9 @@ def index():
 
 @app.route('/honey', methods=['POST'])
 def honey():
-    return jsonify(message="Hello World!")
+    data = []
+    f = open('out.txt', 'r')
+    for line in f:
+        line = line.rstrip()
+        data.append('www.' + line)
+    return jsonify(data=data)
