@@ -182,7 +182,7 @@ def main():
 
     max_links = 100
     max_workers = 10
-    outFile = 'hive.txt'
+    outFile = 'output.txt'
     for o, a in opts:
         if o in ('-h', '--help'):
             usage()
