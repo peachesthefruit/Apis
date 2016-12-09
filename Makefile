@@ -17,12 +17,14 @@ clean:
 test:	test-output test-memory test-time
 
 test-output:	apis
-	@echo Testing output...
-	@diff --suppress-common-lines -y <(./apis < input.txt) output.txt
+	@echo Testing output 1...
+	@diff --suppress-common-lines -y <(./honeybee -b b -n 2 < testInput.txt< testInput.txt) testOutput1.txt
+	@echo Testing output 2...
+	@diff --suppress-common-lines -y <(./honeybee -b d -n 3 < testInput.txt< testInput.txt) testOutput2.txt
 
 test-memory:	apis
 	@echo Testing memory...
-	@[ `valgrind --leak-check=full ./apis < input.txt 2>&1 | grep ERROR | awk '{print $$4}'` = 0 ]
+	@[ `valgrind --leak-check=full ./honeybee -b b -r b < testInput.txt 2>&1 | grep ERROR | awk '{print $$4}'` = 0 ]
 
 test-time:	$(PROGRAMS)
 	@echo Testing time...

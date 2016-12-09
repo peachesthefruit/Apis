@@ -32,6 +32,7 @@ bool r = false;
 class Graph{
 	public:
 		Graph();
+		~Graph();
 		void BFS();
 		void randomWalk();
 		void printSuggest(std::map<std::string, int>, char);
@@ -50,6 +51,8 @@ Graph::Graph(){
 		}
 	}
 }
+
+Graph::~Graph(){}
 
 void Graph::BFS(){
 	std::queue<it> q;
@@ -140,7 +143,7 @@ void Graph::printSuggest(std::map<std::string,int> s, char c){
 		if(i >= mapVec.size()){
 			break;
 		}
-		std::cout<<"\t"<<mapVec[i].first<<std::endl;
+		std::cout<<mapVec[i].first<<std::endl;
 	}
 }
 
