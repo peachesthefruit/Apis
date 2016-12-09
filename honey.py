@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.5
 
-import sys, signal, shutil
+import sys, signal, shutil, lxml
 from urllib.parse import urlparse
 import asyncio
 import aiohttp
@@ -60,7 +60,7 @@ class HoneyBee:
         headers = { 'User-Agent' : 'Mozilla/5.0' }
         hit = False
         try:
-            with aiohttp.Timeout(5):
+            with aiohttp.Timeout(7):
                 response = yield from self.session.get(url, headers=headers, allow_redirects=False)
                 body = yield from response.text()
                 links = set()
@@ -194,7 +194,7 @@ def main():
             'http://buzzfeed.com',
             'http://lolcats.com',
             'http://espn.com',
-            'http://att.yahoo.net',
+            'http://att.yahoo.com',
             'http://yahoo.com',
            ]
     hb = HoneyBee(root, max_workers=max_workers, max_links=max_links)
