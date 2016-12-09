@@ -147,7 +147,7 @@ class Scout:
 
         return True
 
-    def dump(self, outFile='hive.txt'):
+    def dump(self, outFile='output.txt'):
         '''Dump output to file'''
         outFile = open(outFile, 'w')
         for src, links in self.graph.items():
@@ -224,11 +224,11 @@ def main():
     signal.signal(signal.SIGINT, signal.default_int_handler)
     try:
         loop.run_until_complete(scout.buzz())
-        hb.dump(outFile)
+        scout.dump(outFile)
         print('\n')
     except KeyboardInterrupt:
         print('\nExiting gracefully like a bee')
-        hb.dump(outFile)
+        scout.dump(outFile)
         sys.exit()
 
 if __name__ == '__main__':
