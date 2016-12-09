@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Apis</title>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" media="screen" title="no title">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <h2 class="text-center">Apis </h2>
+        <div id="form" class="col-md-4">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="root"></div>
+  <script src="//unpkg.com/react@15/dist/react.js"></script>
+  <script src="//unpkg.com/react-dom@15/dist/react-dom.js"></script>
+  <script src="https://code.jquery.com/jquery-3.1.1.js"
+    integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+    crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="{{url_for('static', filename='jquery.js') }}">\x3C/script>')</script>
+  <script type=text/javascript>
+    $ROOT = {{ request.script_root|tojson|safe }};
+  </script>
+  <script type="text/babel">
+  class NameForm extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {value: ''};
+
+      this.handleChange = this.handleChange.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event) {
+      this.setState({value: event.target.value});
+    }
+
+    handleSubmit(event) {
+      $.post( $ROOT + "/honey", (data) => {
+        console.log('hello world', data)
+      });
+      event.preventDefault();
+    }
+
+    render() {
+      return (
+        <form onSubmit={this.handleSubmit}>
+        <div className="input-group">
+        <input type="text" name="search" className="form-control input-lg" placeholder="URL"
+          value={this.state.value} onChange={this.handleChange}/>
+        <span className="input-group-btn">
+          <button className="btn btn-info btn-lg" type="button"><i className="glyphicon glyphicon-search"></i>
+          </button>
+        </span>
+        </div>
+        </form>
+      );
+    }
+  }
+
+  ReactDOM.render(
+    <NameForm />,
+    document.getElementById('form')
+  );
+  </script>
+</body>
+</html>
