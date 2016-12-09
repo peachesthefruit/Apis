@@ -66,7 +66,7 @@ int main (int argc, char *argv[]) {
     psignal(WTERMSIG(status), NULL);
   float time = ru.ru_utime.tv_sec + ru.ru_utime.tv_usec/1000000. + 
                ru.ru_stime.tv_sec + ru.ru_stime.tv_usec/1000000.;
-  printf("%f seconds\t", time);
+  printf("%f\t", time);
   float memory = (float)ru.ru_maxrss * memory_unit / (1024*1024);
-  printf("%f Mbytes\n", memory);
+  printf("%f\n", memory);
 }
