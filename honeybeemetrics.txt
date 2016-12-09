@@ -1,0 +1,54 @@
+RANDOM WALKING:
+Suggested Sites:
+cnb.cx
+cnbc.com
+reuters.com
+cnn.passagen.se
+edition.cnn.com
+0.062500	3.429688
+Suggested Sites:
+ashingtonpost.com
+gocomics.com
+pcomics.washingtonpost.com
+subscribe.washingtonpost.com
+uclick.com
+0.062500	3.429688
+Suggested Sites:
+i2.cdn.turner.com
+unaids.org
+us.macmillan.com
+vine.co
+0.078125	3.425781
+Suggested Sites:
+cnn.it
+smartlink.cnn.com
+0.140625	3.425781
+Suggested Sites:
+zh-cn.facebook.com
+zh-cn.messenger.com
+l.facebook.com
+amicc.org
+audience.cnn.com
+0.921875	3.429688
+BREADTH-FIRST SEARCH:
+Suggested Sites:
+money.cnn.com
+georgewbush-whitehouse.archives.gov
+community.cnn.com
+realsimple.com
+edition.cnn.com
+0.062500	3.593750
+Suggested Sites:
+cbinsights.com
+zacks.com
+thestreet.com
+fool.com
+ft.com
+0.484375	9.359375
+Suggested Sites:
+my.fool.com
+facebook.com
+l.facebook.com
+online.wsj.com
+money.cnn.com
+40.265625	629.746094
