@@ -15,15 +15,16 @@
   crossorigin="anonymous"></script>
   <script>window.jQuery || document.write('<script src="{{url_for('static', filename='jquery.js') }}">\x3C/script>')</script>
   <script type=text/javascript>
-  $ROOT = {{ request.script_root|tojson|safe }};
+  $ROOT = {{ request.script_root|tojson|safe }}; // get root of flask server
   </script>
   <script type="text/babel">
-  class NameForm extends React.Component {
+  /* ReactJS component for webpage */
+  class Apis extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        value: '',
-        list: []
+        value: '', // value of search box
+        list: [] // list of urls
       };
 
       this.handleChange = this.handleChange.bind(this);
@@ -36,7 +37,7 @@
 
     handleSubmit(event) {
       $.post( $ROOT + "/honey", { 'search' : this.state.value }, (res) => {
-        console.log('hello world', res)
+        console.log('data', res)
         this.setState({list: res.data})
       });
       event.preventDefault();
@@ -74,7 +75,7 @@
   }
 
   ReactDOM.render(
-    <NameForm />,
+    <Apis />,
     document.getElementById('root')
   );
   </script>

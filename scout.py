@@ -9,7 +9,8 @@ from urllib.request import build_opener
 
 class Scout:
     logFile = open('scout.log', 'w')
-    ignored = set([
+
+    ignored = set([ #Ignore some domains to avoid bad links in results
         'ad.doubleclick.net',
         't.co',
         'bit.ly',
@@ -23,6 +24,7 @@ class Scout:
 
     def __init__(self, root, max_workers=10, max_links=100):
         '''Constructor takes in number of links and workers and prepares crawler'''
+
         self.max_links = max_links
         self.max_workers = max_workers
         self.links_left = max_links
@@ -31,24 +33,29 @@ class Scout:
 
         self.graph = dict()
 
+        # Session for which all async http requests will be made
         self.session = aiohttp.ClientSession()
 
+        # Queue each worker will be able to access asynchronously
         self.to_visit = asyncio.Queue()
-        if type(root) == type([]):
+        if type(root) == type([]): # Root is list
             for link in root:
                 self.to_visit.put_nowait((link, True))
                 self.links_left -= 1
-        else:
+        else: # Root is string
             self.to_visit.put_nowait((root, True))
             self.links_left -= 1
 
     @asyncio.coroutine
     def buzz(self):
         '''Creates worker bees to venture into the fields in search of pollen'''
+
+        # Create workers
         tasks = []
         for i in range(self.max_workers):
             tasks.append(asyncio.Task(self.make_request()))
 
+        # Called when all tasks are removed from queue and completed
         yield from self.to_visit.join()
         self.session.close()
         for t in tasks:
@@ -57,6 +64,7 @@ class Scout:
     @asyncio.coroutine
     def make_request(self):
         '''Each worker grabs a url from the queue and makes the request'''
+
         while True:
             url, unique = yield from self.to_visit.get()
 
@@ -66,23 +74,29 @@ class Scout:
     @asyncio.coroutine
     def fetch(self, url, new_hit):
         '''Worker asynchronously gets page and parses it, then adds new links to queue'''
+
         self.progress('getting {}'.format(url))
-        headers = { 'User-Agent' : 'Mozilla/5.0' }
-        hit = False
+        headers = { 'User-Agent' : 'Mozilla/5.0' } # Need user agent for some sites
+
         try:
             with aiohttp.Timeout(7):
                 response = yield from self.session.get(url, headers=headers, allow_redirects=False)
                 body = yield from response.text()
+
                 links = set()
                 soup = BeautifulSoup(body, "lxml")
+
+                # Extract all links from body of html
                 for tag in soup.find_all('a', href=True):
                     links.add(tag['href'])
                 for link in links.difference(self.visited):
+                    # Ignore invalid links
                     if self.links_left > 0 and self.is_valid_link(link):
                         unique = self.add_to_graph(url, link)
                         if unique:
                             self.links_left -= 1
                         self.progress('adding {}'.format(link))
+                        # Add link to queue
                         self.to_visit.put_nowait((link, unique))
                         self.visited.add(link)
                     elif self.links_left <= 0:
@@ -99,7 +113,8 @@ class Scout:
         except:
             self.logFile.write('Unexpected error in {}\n'.format(url))
         finally:
-            if new_hit:
+
+            if new_hit: # Only increments when links is between unique domains
                 self.links_hit += 1
             self.progress('done with {}'.format(url))
 
@@ -108,17 +123,21 @@ class Scout:
     def progress(self, suffix=''):
         '''Prints progress bar in terminal'''
         try:
+            # Calculate width of bar based on terminal size
             t_width = int(shutil.get_terminal_size().columns)
             bar_len = int(t_width) / 3
-            filled_len = int(round(bar_len * self.links_hit / float(self.max_links)))
 
+            # Amount bar is filled
+            filled_len = int(round(bar_len * self.links_hit / float(self.max_links)))
             percents = round(100.0 * self.links_hit / float(self.max_links), 1)
+
+            # Create string for bar
             bar = '#' * int(filled_len) + '.' * int(bar_len - filled_len)
             progress = '[' + bar + '] ' + str(percents) + '% {}/{}...'.format(self.links_hit, self.max_links)
             suffix_len = t_width - len(progress) - 1
             progress += suffix[:suffix_len]
             space_len = t_width - len(progress) - 1
-            progress += ' ' * space_len + '\r'
+            progress += ' ' * space_len + '\r' # Carriage return doesn't make new link, keeps bar in same place
 
             sys.stdout.write(progress)
             sys.stdout.flush()
@@ -126,7 +145,7 @@ class Scout:
             self.logFile.write('Exception printing status {}'.format(e))
 
     def is_valid_link(self, link):
-        '''Determines if links is valid or in the ignored set'''
+        '''Determines if links is invalid or in the ignored set'''
         if urlparse(link).scheme is '' or urlparse(link).netloc is '':
             return False
         elif urlparse(link).netloc.replace('www.','') in self.ignored:
@@ -135,7 +154,7 @@ class Scout:
             return True
 
     def add_to_graph(self, src, dest):
-        '''Add link to the graph which is dumped later'''
+        '''Add link to the graph if unique domains'''
         src = urlparse(src).netloc.strip('w.')
         dest = urlparse(dest).netloc.strip('w.')
         if src not in self.graph:
@@ -173,6 +192,7 @@ def usage():
 
 
 def main():
+    # Parse command line arguments
     try:
         opts, args = getopt.getopt(sys.argv[1:], "hw:l:o:", ["help"])
     except getopt.GetoptError as err:
@@ -196,6 +216,7 @@ def main():
         else:
             assert False, "unhandled option"
 
+    # Get async event loop instance
     loop = asyncio.get_event_loop()
     root = [
             'http://www.cnn.com',
@@ -220,10 +241,11 @@ def main():
             'http://stackoverflow.com',
             'http://wikia.com'
            ]
+
     scout = Scout(root, max_workers=max_workers, max_links=max_links)
     signal.signal(signal.SIGINT, signal.default_int_handler)
     try:
-        loop.run_until_complete(scout.buzz())
+        loop.run_until_complete(scout.buzz()) # Loop until scout completes
         print('\n')
     except KeyboardInterrupt:
         print('\nExiting gracefully like a bee')

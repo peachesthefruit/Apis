@@ -1,8 +1,8 @@
 #!/bin/bash
 # Used to run all benchmarks
 echo "Setting permissions..."
-chmod 775 benchmarkhoneybee.sh
-chmod 775 benchmarkscout.sh
+chmod +x benchmarkhoneybee.sh
+chmod +x benchmarkscout.sh
 echo "Making executables..."
 make
 echo "Running honeybee benchmarking..."
