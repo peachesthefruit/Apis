@@ -224,12 +224,11 @@ def main():
     signal.signal(signal.SIGINT, signal.default_int_handler)
     try:
         loop.run_until_complete(scout.buzz())
-        scout.dump(outFile)
         print('\n')
     except KeyboardInterrupt:
         print('\nExiting gracefully like a bee')
+    finally:
         scout.dump(outFile)
-        sys.exit()
 
 if __name__ == '__main__':
     main()

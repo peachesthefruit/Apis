@@ -1,6 +1,8 @@
+#!/usr/bin/env python3.5
+
 from flask import Flask, jsonify, render_template, request
 import subprocess
-import urlparse
+from urllib.parse import urlparse, unquote
 import json
 app = Flask(__name__)
 
@@ -10,9 +12,16 @@ def index():
 
 @app.route('/honey', methods=['POST'])
 def honey():
-    url = request.get_data().split('=')[-1]
-    #url = urlparse(url).netloc.strip('w')
+    data = request.get_data().decode(encoding='UTF-8')
+    url = urlparse(unquote(data.split('=')[-1]))
+    site = url.netloc or url.path
+    site = site.replace('www.','')
+
     inFile = open('./nectar.txt')
-    p = subprocess.Popen(['./honeybee', '-b', url, '-n', '1'], stdin=inFile, stdout=subprocess.PIPE)
+    
+    p = subprocess.Popen(['./honeybee', '-b', site, '-n', '1'], stdin=inFile, stdout=subprocess.PIPE)
     out, err = p.communicate()
-    return jsonify(data=out.split('\n')[1:-1])
+    out = out.decode(encoding='UTF-8')
+    data = out.split('\n')[1:-1]
+
+    return jsonify(data=data)

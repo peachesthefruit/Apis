@@ -1,5 +1,8 @@
 *~
 *.log
 *.pyc
+*.swp
 VENV
 honeybee
+measure
+output.txt
