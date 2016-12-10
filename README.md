@@ -97,6 +97,8 @@ Testing and Benchmarking
     # CLI
     $ ./apis.py benchmark
     ```
+    Results are in `RESULTS.md`
+
 - To test honeybee run:
     ```bash
     $ make test
