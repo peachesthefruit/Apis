@@ -14,15 +14,15 @@ Set-up & Installation:
 
 Code Execution:
 ---------------
-- **To make**:
+- **To make honeybee**:
 
 > make
 
-- **To test**:
+- **To test honeybee**:
 
 > make test
 
-- **To run scout.py and create nectar.txt**:
+- **To run scout.py and create nectar.txt (default output is output.txt, use -h tag for more usage information)**:
 
 > ./scout.py -o nectar.txt
 
@@ -30,9 +30,11 @@ Code Execution:
 
 > ./honeybee -h
 
-- **To run the server, hyve.py**:
+- **To run the server, hive.py**:
 
->
+> # Set FLASK_APP environment variable to hive.py 
+> export FLASK_APP=hive.py # bash syntax
+> flask run
 
 - **To benchmark everything, do**:
 
