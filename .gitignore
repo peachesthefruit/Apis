@@ -6,3 +6,4 @@ VENV
 honeybee
 measure
 output.txt
+*metrics.txt

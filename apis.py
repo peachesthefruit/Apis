@@ -9,6 +9,8 @@ def usage():
         serve:      launches server, run with --help for more options
         suggest:    runs suggestion engine, run with -h for more options
         scout:      runs scout webcrawler, run with -h for more options
+        test:       run tests for honeybee
+        benchmark   run benchmark for honeybee
         help:       show this help message
         ''')
 
@@ -22,20 +24,25 @@ def main():
 
     if command == 'help':
         usage()
-        sys.exit()
     elif command == 'serve':
         command = ['flask', 'run'] + sys.argv[2:]
         print('Serving the queen bee')
         subprocess.call(command)
-        sys.exit()
     elif command == 'suggest':
         command = ['./honeybee'] + sys.argv[2:]
         print('Getting those sweet suggestions')
         subprocess.call(command)
-        sys.exit()
     elif command == 'scout':
         command = ['python3.5', './scout.py'] + sys.argv[2:]
         print('Scouting for all that nectar')
+        subprocess.call(command)
+    elif command == 'test':
+        command = ['make', 'test']
+        print('Testing')
+        subprocess.call(command)
+    elif command == 'benchmark':
+        command = ['sh', 'benchmark.sh']
+        print('Benchmarking')
         subprocess.call(command)
     else:
         print('Invalid command', command)

@@ -7,6 +7,8 @@ PIP_PATH=$(which pip3.5)
     (echo 'Might need root for python install, attempting to sudo' && 
     sudo $PIP_PATH install -r requirements.txt >> apis.log)
 export FLASK_APP=hive.py
+chmod +x scout.py
+chmod +x apis.py
 if [ $? != 0 ]; then
     echo 'Error with Python setup, check apis.log for details'
     exit 1
@@ -19,4 +21,5 @@ if [ $? != 0 ]; then
     echo 'Error with C++ setup, check apis.log for details'
     exit 2
 fi
+chmod +x benchmark.sh
 echo $'Done\n'
