@@ -4,8 +4,6 @@ BFS a certain number of levels from a given website to find recently visited
 suggested sites created using most recently visited sites
 
 random walk randomly traverses graph, and counts how many times a certain site is visited
-
-./a.out < KyInput.txt | sort -r | head -n 5 | cut -b 3-
 */
 
 #include <iostream>
@@ -20,7 +18,6 @@ random walk randomly traverses graph, and counts how many times a certain site i
 
 //Global Variables
 
-
 typedef std::map<std::string, std::vector<std::string>>::iterator it;
 int n = 5;
 int s = 100;
@@ -29,6 +26,7 @@ std::string raddr;
 bool b = false;
 bool r = false;
 
+//Graph class
 class Graph{
 	public:
 		Graph();
@@ -39,10 +37,11 @@ class Graph{
 		int get_random(int);
 
 	private:
-		std::map<std::string,std::vector<std::string>> graph;
+		std::map<std::string,std::vector<std::string>> graph; //adjacency list
 };
 
 Graph::Graph(){
+	//insert pairs into adjacency list
 	std::string tmp1, tmp2;
 	while(std::cin >> tmp1 >> std::ws >> tmp2){
 		graph[tmp1].push_back(tmp2);\
@@ -57,6 +56,12 @@ Graph::~Graph(){}
 void Graph::BFS(){
 	std::queue<it> q;
 	it addr = graph.find(baddr);
+
+	//check search is in adjacency list
+	if(addr == graph.end()){
+		return;
+	}
+
 	q.push(addr);
 	int prev = 1;
 	int next = 0;
@@ -123,6 +128,7 @@ void Graph::randomWalk(){
 }
 
 void Graph::printSuggest(std::map<std::string,int> s, char c){
+	//print top 5 suggestions
 	std::cout<<"Suggested Sites:"<<std::endl;
 	std::vector<std::pair<std::string,int>> mapVec;
 	for(auto i = s.begin(); i != s.end(); i++){
@@ -194,11 +200,13 @@ void parse(int argc, char *argv[]){
 
 
 int main(int argc, char *argv[]){
-	parse(argc, argv);
-	Graph myGraph;
+	parse(argc, argv); //parse command line
+	Graph myGraph; //create graph
+	//if b run a Breadth firts search
 	if(b){
 		myGraph.BFS();
 	}
+	//if r run a random walk search
 	if(r){
 		myGraph.randomWalk();
 	}
