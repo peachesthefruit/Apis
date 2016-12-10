@@ -89,7 +89,7 @@ Here we show how to run each file directly or with the CLI.
 
 Testing and Benchmarking
 ------------------------
-- To benchmark honeybee run:
+- To benchmark honeybee and scout run:
 
     ```bash
     $ ./benchmark.sh
