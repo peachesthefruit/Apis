@@ -1,5 +1,8 @@
 #!/usr/bin/env python3.5
 
+# Flask server for website
+# Calls honeybee to retrieve results
+
 from flask import Flask, jsonify, render_template, request
 import subprocess
 from urllib.parse import urlparse, unquote
@@ -8,10 +11,12 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+    '''Default route that serves index page'''
     return render_template('index.html')
 
 @app.route('/honey', methods=['POST'])
 def honey():
+    '''Calls honeybee and returns results'''
     data = request.get_data().decode(encoding='UTF-8')
     url = urlparse(unquote(data.split('=')[-1]))
     site = url.netloc or url.path
