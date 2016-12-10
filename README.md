@@ -63,7 +63,7 @@ Here we show how to run each file directly or with the CLI.
     $ ./scout.py -w [NUM_WORKERS] -l [NUM_LINKS] -o [OUTPUT_FILE]
     
     # CLI
-    $ ./apis.py scout -w -w [NUM_WORKERS] -l [NUM_LINKS] -o [OUTPUT_FILE]
+    $ ./apis.py scout -w [NUM_WORKERS] -l [NUM_LINKS] -o [OUTPUT_FILE]
     ```
 
 - Run honeybee suggestion engine (use `-h` flag for full usage instructions):
