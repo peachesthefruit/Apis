@@ -49,7 +49,7 @@ Code Execution:
 - Run honeybee suggestion engine (use `-h` flag for full usage instructions):
 
     ```bash
-    $ ./honeybee -b cnn.com -n 2 < nectar.txt # Use Bread-First Traversal algorithm
+    $ ./honeybee -b cnn.com -n 2 < nectar.txt # Use Breadth-First Traversal algorithm
     $ ./honeybee -r cnn.com -s 100 < nectar.txt # Use Random Walk algorithm
     ```
     
