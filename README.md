@@ -26,48 +26,51 @@ default version. There are a few ways to set up the application:
 
 1. Use `setup.sh`, only works for bash/sh:
     ```bash
-    $ source setup.sh # Will run pip3.5 to install python modules and will set necessary environment variable, as well as build C++ code
+    $ source setup.sh # Will run pip3.5 to install python modules and will set necessary environment variables, as well as build C++ code
     ```
 
 2. Manually install and configure:
     ```bash
-    $ # Install dependencies
+    # Install dependencies
     $ pip3.5 install -r requirements.txt # Might require sudo if not in virtualenv
-    $ # Configure flask
+    # Configure flask
     $ export FLASK_APP=hive.py #
-    $ # Build C++ code
+    # Build C++ code
     $ make
     ```
     
 Code Execution:
 ---------------
-- **To make honeybee**:
+- Run scout.py webcrawler (use `-h` flag for full usage instructions):
+    ```bash
+    $ ./scout.py -w [NUM_WORKERS] -l [NUM_LINKS] -o [OUTPUT_FILE]
+    ```
 
-> make
+- Run honeybee suggestion engine (use `-h` flag for full usage instructions):
 
-- **To test honeybee**:
+    ```bash
+    $ ./honeybee -b cnn.com -n 2 < nectar.txt # Use Bread-First Traversal algorithm
+    $ ./honeybee -r cnn.com -s 100 < nectar.txt # Use Random Walk algorithm
+    ```
+    
 
-> make test
+- Run hive.py, a Flask server for the suggestion engine:
 
-- **To run scout.py and create nectar.txt (default output is output.txt, use -h tag for more usage information)**:
+    ```bash
+    $ flask run # FLASK_APP environment variable should be set to hive.py if setup correctly above
+    ```
 
-> ./scout.py -o nectar.txt
+Testing and Benchmarking
+------------------------
+- To benchmark honeybee run:
 
-- **To run honeybee's usage (and learn how to run BFS and random step versions)**:
-
-> ./honeybee -h
-
-- **To run the server, hive.py**:
-
-> # Set FLASK_APP environment variable to hive.py 
-> export FLASK_APP=hive.py # bash syntax
-> flask run
-
-- **To benchmark everything, do**:
-
-> chmod 775 benchmark.sh
-
-> ./benchmark.sh
+    ```bash
+    $ ./benchmark.sh
+    ```
+- To test honeybee run:
+    ```bash
+    $ make test
+    ```
 
 Other Relevant Information:
 ---------------------------
