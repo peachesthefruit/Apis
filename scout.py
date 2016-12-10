@@ -1,5 +1,17 @@
 #!/usr/bin/env python3.5
 
+# Webcrawler based on the asyncio and aiohttp libraries
+# Keeps track of links between domains
+# (i.e. cnn.com -> cnn.com/news does not count)
+# Dumps graph into output file
+
+# NOTE: Occasionally when the queue is large and the number of
+# workers is high, the aiohttp library will throw and error
+# which I was unable to catch. Overall the error is not something
+# to be concerned with since it is rare, but the crawler will
+# miss the url that was being requested at that time. The crawler
+# will then continue as normal without any real complications
+
 import sys, signal, shutil, lxml
 from urllib.parse import urlparse
 import asyncio
@@ -8,6 +20,7 @@ from bs4 import BeautifulSoup
 from urllib.request import build_opener
 
 class Scout:
+    '''Class for webcrawler'''
     logFile = open('scout.log', 'w')
 
     ignored = set([ #Ignore some domains to avoid bad links in results
